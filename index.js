@@ -73,7 +73,7 @@ var WebGLContext = new Class({
 
         /**
          * The canvas DOM element for this context.
-         * @property {Number} view
+         * @property {HTMLCanvasElement} canvas
          */
         this.canvas = view || document.createElement("canvas");
 
