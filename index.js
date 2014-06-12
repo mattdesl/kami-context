@@ -34,7 +34,7 @@ var KamiContext = new Class({
         if (!(this instanceof KamiContext))
             return new KamiContext(options);
         options = options||{};
-        
+
         var width = options.width;
         var height = options.height;
         var view = options.canvas;
@@ -62,7 +62,7 @@ var KamiContext = new Class({
          */
         this.gl = null;
 
-        //If the specified 'view'
+        //if the user specified a GL context..
         if (gl && typeof window.WebGLRenderingContext !== "undefined"
                && gl instanceof window.WebGLRenderingContext) {
             view = gl.canvas;
