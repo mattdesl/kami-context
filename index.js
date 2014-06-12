@@ -1,5 +1,5 @@
 /**
- * @module kami
+ * @module kami-context
  */
 
 var Class = require('klasse');
