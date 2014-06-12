@@ -33,6 +33,7 @@ var KamiContext = new Class({
     initialize: function KamiContext(options) {
         if (!(this instanceof KamiContext))
             return new KamiContext(options);
+        options = options||{};
         
         var width = options.width;
         var height = options.height;
