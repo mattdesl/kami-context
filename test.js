@@ -18,4 +18,9 @@ test('testing context creation', function(t) {
         gl: ctx2.gl
     });
     t.ok(ctx3.gl === ctx2.gl && ctx3.canvas === ctx2.canvas, 'can reuse a previous GL context');
+
+    var ctx4 = new WebGLContext();
+    t.ok(ctx4.gl && ctx4.canvas && ctx4.width > 0, 'creates a new empty canvas');
+
+    t.end();
 });
