@@ -19,7 +19,7 @@ var getContext = require('webgl-context');
  * errors, but in certain debuggers (e.g. Chrome WebGL Inspector), only the latest
  * context will be traced.
  * 
- * @class  KamiContext
+ * @class  WebGLContext
  * @constructor
  * @param {Number} options.width the width of the GL canvas
  * @param {Number} options.height the height of the GL canvas
@@ -28,11 +28,11 @@ var getContext = require('webgl-context');
  *                                   will be used during GL initialization
  * @param {WebGLRenderingContext} options.gl the already-initialized GL context to use
  */
-var KamiContext = new Class({
+var WebGLContext = new Class({
 
-    initialize: function KamiContext(options) {
-        if (!(this instanceof KamiContext))
-            return new KamiContext(options);
+    initialize: function WebGLContext(options) {
+        if (!(this instanceof WebGLContext))
+            return new WebGLContext(options);
         options = options||{};
 
         var width = options.width;
@@ -54,7 +54,7 @@ var KamiContext = new Class({
         /**
          * The actual GL context. You can use this for
          * raw GL calls or to access GLenum constants. This
-         * will be updated on context restore. While the KamiContext
+         * will be updated on context restore. While the WebGLContext
          * is not `valid`, you should not try to access GL state.
          * 
          * @property gl
@@ -117,7 +117,7 @@ var KamiContext = new Class({
         /**
          * A signal dispatched when GL context is lost. 
          * 
-         * The first argument passed to the listener is the KamiContext
+         * The first argument passed to the listener is the WebGLContext
          * managing the context loss.
          * 
          * @event {Signal} lost
@@ -128,7 +128,7 @@ var KamiContext = new Class({
          * A signal dispatched when GL context is restored, after all the managed
          * objects have been recreated.
          *
-         * The first argument passed to the listener is the KamiContext
+         * The first argument passed to the listener is the WebGLContext
          * which managed the restoration.
          *
          * This does not gaurentee that all objects will be renderable.
@@ -223,7 +223,7 @@ var KamiContext = new Class({
      * and the GL rendering context. This also removes references to the view and sets
      * the context's width and height to zero.
      *
-     * Attempting to use this KamiContext or the GL rendering context after destroying it
+     * Attempting to use this WebGLContext or the GL rendering context after destroying it
      * will lead to undefined behaviour.
      */
     destroy: function() {
@@ -279,4 +279,4 @@ var KamiContext = new Class({
     }
 });
 
-module.exports = KamiContext;
+module.exports = WebGLContext;
