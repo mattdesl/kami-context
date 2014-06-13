@@ -1,4 +1,8 @@
 /**
+ * Creates a WebGL context which attempts to manage the 
+ * state of kami objects that are created with this as a 
+ * parameter. 
+ * 
  * @module kami-context
  */
 
@@ -18,15 +22,21 @@ var getContext = require('webgl-context');
  * Providing a canvas that has `getContext('webgl')` already called will not cause
  * errors, but in certain debuggers (e.g. Chrome WebGL Inspector), only the latest
  * context will be traced.
+ *
+ * If `handleContextLoss` is true (default), this will attempt to re-create the context
+ * manually (i.e. no "Rats! WebGL hit a snag!" message), by iterating through all 'managed objects'
+ * and calling create() on them. 
  * 
  * @class  WebGLContext
  * @constructor
+ * @param {Object} options some options for creation
  * @param {Number} options.width the width of the GL canvas
  * @param {Number} options.height the height of the GL canvas
  * @param {HTMLCanvasElement} options.canvas the optional DOM canvas element
  * @param {Object} options.attributes an object containing context attribs which
  *                                   will be used during GL initialization
  * @param {WebGLRenderingContext} options.gl the already-initialized GL context to use
+ * @param {Boolean} options.handleContextLoss whether to try and manage context loss, default true
  */
 var WebGLContext = new Class({
 
@@ -40,6 +50,7 @@ var WebGLContext = new Class({
         var view = options.canvas;
         var gl = options.gl;
         var contextAttributes = options.contextAttributes;
+        this.handleContextLoss = typeof options.handleContextLoss === "boolean" ? options.handleContextLoss : true;
 
         /**
          * The list of rendering objects (shaders, VBOs, textures, etc) which are 
@@ -141,11 +152,13 @@ var WebGLContext = new Class({
         
         //setup context lost and restore listeners
         this.canvas.addEventListener("webglcontextlost", function (ev) {
-            ev.preventDefault();
+            if (this.handleContextLoss)
+                ev.preventDefault();
             this._contextLost(ev);
         }.bind(this));
         this.canvas.addEventListener("webglcontextrestored", function (ev) {
-            ev.preventDefault();
+            if (this.handleContextLoss)
+                ev.preventDefault();
             this._contextRestored(ev);
         }.bind(this));
             
@@ -252,8 +265,11 @@ var WebGLContext = new Class({
         this._initContext();
 
         //now we recreate our shaders and textures
-        for (var i=0; i<this.managedObjects.length; i++) {
-            this.managedObjects[i].create();
+        if (this.handleContextLoss) {
+            for (var i=0; i<this.managedObjects.length; i++) {
+                if (this.managedObjects[i] && typeof this.managedObjects[i].create === "function")
+                    this.managedObjects[i].create();
+            }
         }
 
         //update GL viewport
