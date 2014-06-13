@@ -73,9 +73,14 @@ var WebGLContext = new Class({
          */
         this.gl = null;
 
+        //WebGLInspector in chrome swaps WebGLRenderingContext to
+        //CaptureContext, with a 'rawgl' property
+        var rawgl = (gl && gl.rawgl) ? gl.rawgl : gl;
+
         //if the user specified a GL context..
-        if (gl && typeof window.WebGLRenderingContext !== "undefined"
-               && gl instanceof window.WebGLRenderingContext) {
+        if (rawgl 
+               && typeof window.WebGLRenderingContext !== "undefined"
+               && rawgl instanceof window.WebGLRenderingContext) {
             view = gl.canvas;
             this.gl = gl;
             this.valid = true;
