@@ -1,6 +1,6 @@
 {
   "name": "kami-context",
-  "version": "1.0.7",
+  "version": "1.0.8",
   "description": "WebGL context creation for Kami renderer",
   "main": "index.js",
   "license": "MIT",
