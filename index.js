@@ -187,6 +187,7 @@ var WebGLContext = new Class({
      * Updates the width and height of this WebGL context, resizes
      * the canvas view, and calls gl.viewport() with the new size.
      * 
+     * @method  resize
      * @param  {Number} width  the new width
      * @param  {Number} height the new height
      */
@@ -205,7 +206,9 @@ var WebGLContext = new Class({
      * (internal use)
      * A managed object is anything with a "create" function, that will
      * restore GL state after context loss. 
-     * 
+     *
+     * @private
+     * @method  addManagedObject
      * @param {[type]} tex [description]
      */
     addManagedObject: function(obj) {
@@ -218,7 +221,9 @@ var WebGLContext = new Class({
      * a texture or shader, and have it no longer re-load on context restore.
      *
      * Returns the object that was removed, or null if it was not found in the cache.
-     * 
+     *
+     * @private
+     * @method  removeManagedObject
      * @param  {Object} obj the object to be managed
      * @return {Object}     the removed object, or null
      */
@@ -238,6 +243,8 @@ var WebGLContext = new Class({
      *
      * Attempting to use this WebGLContext or the GL rendering context after destroying it
      * will lead to undefined behaviour.
+     *
+     * @method  destroy
      */
     destroy: function() {
         for (var i=0; i<this.managedObjects.length; i++) {
