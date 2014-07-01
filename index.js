@@ -51,6 +51,7 @@ var WebGLContext = new Class({
         var gl = options.gl;
         var contextAttributes = options.contextAttributes;
         this.handleContextLoss = typeof options.handleContextLoss === "boolean" ? options.handleContextLoss : true;
+        this.usePixelRatio = options.usePixelRatio !== false;
 
         /**
          * The list of rendering objects (shaders, VBOs, textures, etc) which are 
@@ -191,17 +192,29 @@ var WebGLContext = new Class({
     /**
      * Updates the width and height of this WebGL context, resizes
      * the canvas view, and calls gl.viewport() with the new size.
+     *
+     * By default, this tries to acommodate for retina sizes by scaling the
+     * canvas based on the device pixel ratio (i.e. twice the size of width/height),
+     * and then down-scaling the canvas via CSS styling. You can disable this by passing
+     * usePixelRatio as `false` in the constructor, or setting it to false before resizing.
      * 
      * @method  resize
      * @param  {Number} width  the new width
      * @param  {Number} height the new height
      */
     resize: function(width, height) {
+        var dpr = this.usePixelRatio ? window.devicePixelRatio : 1;
+
         this.width = width;
         this.height = height;
 
-        this.canvas.width = width;
-        this.canvas.height = height;
+        this.canvas.width = width * dpr;
+        this.canvas.height = height * dpr;
+
+        if (this.usePixelRatio) {
+            this.canvas.style.width = width + 'px';
+            this.canvas.style.height = height + 'px';
+        }
 
         var gl = this.gl;
         gl.viewport(0, 0, this.width, this.height);
