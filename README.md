@@ -6,6 +6,8 @@ WebGL context creation for [kami](http://github.com/mattdesl/kami). This is much
 
 It is a relatively thin wrapper that can easily be used outside of the scope of other kami modules. 
 
+Throws an error if the WebGL context is not available.
+
 ## Usage
 
 [![NPM](https://nodei.co/npm/kami-context.png)](https://nodei.co/npm/kami-context/)
