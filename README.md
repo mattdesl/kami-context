@@ -2,7 +2,9 @@
 
 [![stable](http://badges.github.io/stability-badges/dist/stable.svg)](http://github.com/badges/stability-badges)
 
-WebGL context creation for kami. This is much like [webgl-context](http://github.com/mattdesl/webgl-context), however, it includes a couple of convenience features, and also attempts to handle context loss events when used alongside other kami modules.
+WebGL context creation for [kami](http://github.com/mattdesl/kami). This is much like [webgl-context](http://github.com/mattdesl/webgl-context), however, it includes a couple of convenience features, and also attempts to handle context loss events when used alongside other kami modules.
+
+It is a relatively thin wrapper that can easily be used outside of the scope of other kami modules. 
 
 ## Usage
 
